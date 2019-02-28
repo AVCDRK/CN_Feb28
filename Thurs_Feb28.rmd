@@ -7,6 +7,8 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+require(tigerstats)
+require(tidyverse)
 ```
 
 ## Normal and other distributions
@@ -23,7 +25,7 @@ Lets explore how we can produce plots of a couple of different normal distributi
 
 ```{r}
 xaxis = seq(from=-200,to=200,by=.1)
-boxplot(xaxis)
+histogram(xaxis)
 ```
 
 now we create the yaxis by using one of the distribution functions helper functions the dnorm function.  We will look at a normal distribution with mean = 110 and standard deviation = 15
@@ -59,4 +61,81 @@ What is the area under each curve
 (area1=sum(yaxis1*.1))
 (area2=sum(yaxis2*.1))
 ```
+##Now we look at a way that normal distributions occur naturally.
 
+We examine what happens when we are interested in averages.   First we get the collection of ten thousand opinions on Kim Kardashian from the tigerstats package in R.
+
+```{r}
+head(imagpop)
+kim <- imagpop$kkardashtemp
+```
+
+The variable "kim" is a rating on a scale from zero to 100 of each persons perception of Kim.  Lets look at that distribution.
+
+```{r}
+plot(kim)
+plot(density(kim))
+hist(kim)
+```
+  
+##Wow this is about as far from normal as you get!!!
+
+looks like about half luv her and the other half think she stinks.
+
+We will now use the ggplot2 plotting software from the tidyverse collection of packages to get some more insight.
+
+```{r}
+ggplot(imagpop,aes(x=kkardashtemp,col=sex)) +
+  geom_histogram()
+
+```
+  
+##guys like her, gals dish her!  
+
+Now we look at average group opinions.  We start with groups of two and work our way up to bigger groups.
+
+```{r}
+by2=numeric()
+for (i in 1:10000){
+ by2[i] = mean(sample(kim,size=2))
+}
+plot(density(by2))
+```
+
+##Whats going on??? 
+looks like it is twice as likely to select a guy and a gal as two guys or two gals.
+
+##Lets try 3   
+  
+```{r}
+by3=numeric()
+for (i in 1:10000){
+ by3[i] = mean(sample(kim,size=3))
+}
+plot(density(by3))
+```
+  
+
+## Thats cool, Lets try 4  
+
+```{r}
+by4=numeric()
+for (i in 1:10000){
+ by4[i] = mean(sample(kim,size=4))
+}
+plot(density(by4))
+``` 
+  
+##As we take larger and larger sample sizes the shape of the plot of averages is transforming into a bell shaped curve.
+When the sample sizes reach 30 the sample averages morph into a normal distribution -
+this result is called "The Central Limit Theorem"
+ 
+```{r}
+by30=numeric()
+for (i in 1:10000){
+ by30[i] = mean(sample(kim,size=30))
+}
+plot(density(by30))
+```  
+ 
+##We used dnorm to create the points in our plot, what do pnorm, qnorm, and rnorm do???
