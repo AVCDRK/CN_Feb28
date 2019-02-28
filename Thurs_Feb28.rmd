@@ -1,0 +1,62 @@
+---
+title: "Normal and others"
+author: "Dr K"
+date: "February 27, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Normal and other distributions
+
+Among all the distributions we see in practice, one is overwhelmingly the most common.
+The symmetric, unimodal, bell curve is ubiquitous throughout statistics. Indeed it is so
+common, that people often know it as the normal curve or normal distribution.
+The normal distribution model always describes a symmetric, unimodal, bell-shaped curve.
+However, these curves can look different depending on the details of the model. Specifcally,
+the normal distribution model can be adjusted using two parameters: mean and standard
+deviation. As you can probably guess, changing the mean shifts the bell curve to the left or
+right, while changing the standard deviation stretches or constricts the curve.
+Lets explore how we can produce plots of a couple of different normal distributions.  First we construct the x-axis
+
+```{r}
+xaxis = seq(from=-200,to=200,by=.1)
+boxplot(xaxis)
+```
+
+now we create the yaxis by using one of the distribution functions helper functions the dnorm function.  We will look at a normal distribution with mean = 110 and standard deviation = 15
+
+```{r}
+yaxis1 = dnorm(x=xaxis, mean = 110, sd=15)
+```
+now we plot it
+
+```{r}
+plot(xaxis,yaxis1,col="blue")
+
+```
+
+lets create a second yaxis2 with mean 95 and standard deviation = 25
+
+```{r}
+yaxis2 = dnorm(x=xaxis, mean = 45, sd=25)
+plot(xaxis,yaxis2,col="green")
+```
+
+Lets put both on the same plot to compare
+
+```{r}
+plot(xaxis,yaxis1,col="blue")
+lines(xaxis,yaxis2,col="green")
+```
+  
+What is the area under each curve  
+
+
+```{r}
+(area1=sum(yaxis1*.1))
+(area2=sum(yaxis2*.1))
+```
+
