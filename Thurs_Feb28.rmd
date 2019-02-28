@@ -1,5 +1,5 @@
 ---
-title: "Normal and others"
+title: "Normal distribution and R"
 author: "Dr K"
 date: "February 27, 2019"
 output: html_document
@@ -11,7 +11,7 @@ require(tigerstats)
 require(tidyverse)
 ```
 
-## Normal and other distributions
+## Understanding Normal distributions
 
 Among all the distributions we see in practice, one is overwhelmingly the most common.
 The symmetric, unimodal, bell curve is ubiquitous throughout statistics. Indeed it is so
@@ -40,7 +40,7 @@ plot(xaxis,yaxis1,col="blue")
 
 ```
 
-lets create a second yaxis2 with mean 95 and standard deviation = 25
+lets create a second yaxis2 with mean 45 and standard deviation = 25
 
 ```{r}
 yaxis2 = dnorm(x=xaxis, mean = 45, sd=25)
@@ -139,3 +139,29 @@ plot(density(by30))
 ```  
  
 ##We used dnorm to create the points in our plot, what do pnorm, qnorm, and rnorm do???
+  
+  
+  Let's go back to our plot of yaxis2  
+  manipulate the value in qnorm to be between 0 and 1  
+  
+  
+```{r}
+#messing with qnorm
+yaxis2 = dnorm(x=xaxis, mean = 45, sd=25)
+plot(xaxis,yaxis2,col="green")
+(qval = qnorm(.75,mean = 45, sd=25))
+abline(v=qval,col="red")
+```
+
+  
+##Now pnorm
+
+```{r}
+yaxis2 = dnorm(x=xaxis, mean = 45, sd=25)
+plot(xaxis,yaxis2,col="green")
+(pval = pnorm(100,mean = 45, sd=25))
+abline(v=100,col="red")
+#pval is the area to the left of the line
+```
+
+  
